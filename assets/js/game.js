@@ -6,6 +6,7 @@ $('document').ready(function(){
   var questDiv = $('.question');
   var options = $('.options');
   var alert = $('.alert');
+  var msg = $('.msg');
   var nextButton = $('.nextButton');
 
   // Question array
@@ -39,48 +40,46 @@ $('document').ready(function(){
 
   var question = questions[questionCounter].question;
 
-  //Loop question options
+  //Print the quesiton
+  function init(){
+    questDiv.html(question);
+    setOptions(questions);
+  }//end of init
+
+  init();
+    //Loop question options and prints out the multiple choice answers
   function setOptions(questions){
     for(var i = 0; i < questions[questionCounter].options.length ; i++){
       var newDiv = $('<button class="btn btn-primary guess" value="'+ i +'">'+ questions[questionCounter].options[i] + '</button>');
       options.append(newDiv);
+      console.log(questions[questionCounter].options.length)
     };
+
     $('.guess').on('click', function(){
-      console.log(questions[questionCounter].answer);
-      if(this.value == questions[questionCounter].answer){
-        alert.removeClass('hidden');
-        alert.addClass('alert-success');
-        alert.prepend('You have gotten the correct answer!');
-        alert.append('<button class="btn nextButton pull-right" role="alert">Next <span aria-hidden="true" click>&gt;</span></button>');
-        nextButton.addClass('btn-success');
-      }else{
-        alert.removeClass('hidden');
-        alert.addClass('alert-danger');
-        alert.prepend('Sorry have gotten the wrong answer! The correct answer was: ' + questions[questionCounter].options[questions[questionCounter].answer] );
-        nextButton.addClass('btn-danger');
+    if(this.value == questions[questionCounter].answer){
+      alert.removeClass('hidden');
+      alert.addClass('alert-success');
+      msg.html('You have gotten the correct answer!');
+      nextButton.addClass('btn-success');
+    }else{
+      alert.removeClass('hidden');
+      alert.addClass('alert-danger');
+      msg.html('Sorry have gotten the wrong answer! The correct answer was: ' + questions[questionCounter].options[questions[questionCounter].answer] );
+      nextButton.addClass('btn-danger');
       }
     });
   }
-
-  //Print the quesiton
-  function init(){
-    questDiv.html(question);
-    setOptions(questions)
-
-  }//end of init
-
+  
+  //Prints the next question after click
   nextButton.on('click', function(){
     questionCounter++;
     question = questions[questionCounter].question;
     questDiv.html(question);
-    options.html('');
-    alert.html(' ');
+    // alert.html(' ');
+    options.html(' ');
     alert.addClass('hidden');
     console.log(questionCounter);
-    setOptions(questions);
-  })
-
-
-  init();
+    init();
+  });
 
 });//End of document.ready
