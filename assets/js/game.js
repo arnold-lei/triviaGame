@@ -23,7 +23,7 @@ $('document').ready(function(){
     },
     {
       question: 'People have about 650 skeletal muscles. How many do cats have?',
-      options: [500, 650, 800, 127],
+      options: [500, 650, 800, 1270],
       answer: 0,
     },
     {
@@ -52,7 +52,7 @@ $('document').ready(function(){
       answer: 0,
     },
      {
-      question: 'True or False: “Tabby” is the name of a cat breed.',
+      question: 'True or False: \“Tabby\” is the name of a cat breed.',
       options: ['True', 'False'],
       answer: 1,
     },
@@ -87,7 +87,7 @@ $('document').ready(function(){
       answer: 1,
     },
      {
-      question: ' A cat named Towser was an <a href="http://www.petful.com/behaviors/why-cat-bring-dead-animals-mice/">expert mouser.</a> (True story!) How many mice did this famous cat reportedly catch in her lifetime?',
+      question: ' A cat named Towser was an <a target="_blank" href="http://www.petful.com/behaviors/why-cat-bring-dead-animals-mice/">expert mouser.</a> (True story!) How many mice did this famous cat reportedly catch in her lifetime?',
       options: ['899', '8,899', '18,899', '28,899'],
       answer: 3,
     },
