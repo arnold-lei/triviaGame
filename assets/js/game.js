@@ -1,6 +1,9 @@
 $('document').ready(function(){
   'use strict';
   var questionCounter = 0;
+  var correctCount = 0;
+  var wrongCount = 0;
+  var time = 1000
 
   //Where the question will be printed and answer options
   var questDiv = $('.question');
@@ -8,6 +11,30 @@ $('document').ready(function(){
   var alert = $('.alert');
   var msg = $('.msg');
   var nextButton = $('.nextButton');
+  var correct = $('.answeredCorrect');
+  var wrong = $('.answeredWrong');
+  var timer = $('.timer');
+
+function update() {
+  var myTime = timer.html();
+  var ss = myTime.split(":");
+  var dt = new Date();
+  dt.setHours(0);
+  dt.setMinutes(ss[0]);
+  dt.setSeconds(ss[1]);
+
+  var dt2 = new Date(dt.valueOf() - 1000);
+  var temp = dt2.toTimeString().split(" ");
+  var ts = temp[0].split(":");
+
+  timer.html(ts[1]+":"+ts[2]);
+  setTimeout(update, 1000);
+  }
+
+  function countDown(){
+    setInterval(function(){timer -= 1}, 1000);
+    timer.html(time);
+  }
 
   // Question array
   var questions = [
@@ -27,7 +54,7 @@ $('document').ready(function(){
       answer: 0,
     },
     {
-      question: 'Which brain is the cat\’s brain most similar to?',
+      question: 'Which brain is the cat\'s brain most similar to?',
       options: ['Dog\'s', 'Human\'s'],
       answer: 1,
     },
@@ -52,7 +79,7 @@ $('document').ready(function(){
       answer: 0,
     },
      {
-      question: 'True or False: \“Tabby\” is the name of a cat breed.',
+      question: 'True or False: \"Tabby\" is the name of a cat breed.',
       options: ['True', 'False'],
       answer: 1,
     },
@@ -72,7 +99,7 @@ $('document').ready(function(){
       answer: 0,
     },
      {
-      question: 'True or False: Like dogs, cats sniff one another’s butts.',
+      question: 'True or False: Like dogs, cats sniff one another\'s butts.',
       options: ['True', 'False'],
       answer: 0,
     },
@@ -82,7 +109,7 @@ $('document').ready(function(){
       answer: 1,
     },
      {
-      question: 'What’s it called when a cat rubs the side of its head on you or on furniture?',
+      question: 'What\'s it called when a cat rubs the side of its head on you or on furniture?',
       options: ['Beaning', 'Bunting', 'Brocking', 'Tagging'],
       answer: 1,
     },
@@ -92,12 +119,12 @@ $('document').ready(function(){
       answer: 3,
     },
      {
-      question: 'Cats can’t taste this:',
+      question: 'Cats can\'t taste this:',
       options: ['Sour', 'Sweet', 'Bitter', 'Salt'],
       answer: 1,
     },
      {
-      question: 'What’s the total number of claws that most house cats have?',
+      question: 'What\'s the total number of claws that most house cats have?',
       options: ['16', '18', '20', 'None of the above'],
       answer: 1,
     },
@@ -108,12 +135,19 @@ $('document').ready(function(){
     },
      {
       question: 'Which of the following statements about body language is false?:',
-      options: [' A cat’s tail held high means “I’m happy.”', 'A twitching tail means “I’m getting irritated.”', 'A thumping tail means “I’m totally frustrated!”', 'A tail tucked underneath the body means “I’m hungry.”'],
+      options: [' A cat\'s tail held high means "I\'m happy."', 'A twitching tail means "I\'m getting irritated."', 'A thumping tail means "I\'m totally frustrated!"', 'A tail tucked underneath the body means "I\'m hungry."'],
       answer: 3,
     },
   ];
 
   var question = questions[questionCounter].question;
+
+  //Intro hides and shows gameboard
+  $('.start').on('click', function(){
+    update()
+    $('.intro').addClass('hidden');
+    $('.gameBoard').removeClass('hidden');
+  });
 
   //Print the quesiton
   function init(){
@@ -127,13 +161,14 @@ $('document').ready(function(){
     for(var i = 0; i < questions[questionCounter].options.length ; i++){
       var newDiv = $('<button class="btn btn-primary guess" value="'+ i +'">'+ questions[questionCounter].options[i] + '</button>');
       options.append(newDiv);
-      console.log(questions[questionCounter].options.length)
     };
 
   $('.guess').on('click', function(){
     if(this.value == questions[questionCounter].answer){
       alert.removeClass('hidden alert-danger');
       alert.addClass('alert-success');
+      correctCount++;
+      correct.html(correctCount);
       msg.html('You have gotten the correct answer!');
       nextButton.addClass('btn-success');
       nextButton.removeClass('btn-danger');
@@ -141,7 +176,9 @@ $('document').ready(function(){
     }else{
       alert.removeClass('hidden alert-success');
       alert.addClass('alert-danger');
-      msg.html('Sorry have gotten the wrong answer! The correct answer was: ' + questions[questionCounter].options[questions[questionCounter].answer] );
+      wrongCount++;
+      wrong.html(wrongCount);
+      msg.html('Sorry you\'ve gotten the wrong answer! The correct answer was: ' + questions[questionCounter].options[questions[questionCounter].answer] );
       nextButton.addClass('btn-danger');
       nextButton.removeClass('btn-success');
       $('.guess').prop('disabled', true);
@@ -151,14 +188,38 @@ $('document').ready(function(){
 
   //Prints the next question after click
   nextButton.on('click', function(){
-    questionCounter++;
-    question = questions[questionCounter].question;
-    questDiv.html(question);
-    // alert.html(' ');
-    options.html(' ');
-    alert.addClass('hidden');
-    console.log(questionCounter);
-    init();
+    //end the game
+    if(questionCounter + 1 == questions.length){
+      $('.answeredCorrectly').html(correctCount);
+      $('.answeredWrong').html(wrongCount);
+      $('.timeSpent').html(correctCount);
+      questionCounter = 0;
+      correctCount = 0;
+      wrongCount = 0;
+      options.html(' ');
+      $('.intro').removeClass('hidden');
+      $('.title').html('<i class="fa fa-paw text-center" aria-hidden="true"></i> Welcome to my cat trivia game! Want to Retry?<i class="fa fa-paw text-center" aria-hidden="true"></i>');
+      $('.gameBoard').addClass('hidden')
+      question = questions[questionCounter].question;
+      $('.questionCount').html(questionCounter+1);
+      questDiv.html(question);
+      alert.addClass('hidden');
+
+      init();
+    }else{
+      questionCounter++;
+      question = questions[questionCounter].question;
+      questDiv.html(question);
+      $('.questionCount').html(questionCounter+1);
+      // alert.html(' ');
+      options.html(' ');
+      alert.addClass('hidden');
+      console.log(questionCounter);
+      init();
+    }
+    if(questionCounter + 2 == questions.length){
+      nextButton.html('Finish!');
+    }
   });
 
 });//End of document.ready

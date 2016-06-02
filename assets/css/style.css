@@ -1,0 +1,60 @@
+@font-face{
+  font-family: 'Sunn';
+  src: url('SUNN.otf');
+}
+
+@font-face{
+  font-family: 'Reef';
+  src: url('Reef.otf');
+}
+
+h1{
+  font-size: 70px;
+  font-weight: bold;
+  font-family: 'Sunn';
+}
+h2{
+  font-size: 60px;
+  font-weight: bold;
+  font-family: 'Sunn';
+}
+h3{
+  font-size: 50px;
+  font-weight: bold;
+  font-family: 'Sunn';
+}
+
+body{
+  background-image: url('../img/bg_cat2.jpg');
+  background-color:#fff;
+  font-family: 'Reef';
+  font-size: 50px;
+  color:#734d26;
+}
+
+.btn{
+  font-size: 50px;
+  padding:0 1em;
+}
+
+.container{
+  background-color: #fbf2e3;
+  padding:2% 5% 5% 5%;
+  margin:2em;
+  width:90%;
+  border-color: #000;
+  border-style: double;
+  border-width: 5px;
+  border-radius: 25px;
+
+}
+
+.box-shadow{
+  -webkit-box-shadow: 0px 1px 5px 0px rgba(46,46,46,0.57);
+  -moz-box-shadow: 0px 1px 5px 0px rgba(46,46,46,0.57);
+  box-shadow: 0px 1px 5px 0px rgba(46,46,46,0.57);
+}
+
+.question{
+  margin-bottom: 5%;
+}

@@ -1,28 +1,55 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Arnold's Trivia Game</title>
+  <title>Kitten Trivia Game</title>
   <!-- Latest compiled and minified CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 
   <!-- customized styling -->
   <link rel="stylesheet" type="text/css" href="assets/css/style.css">
   <script   src="https://code.jquery.com/jquery-2.2.4.js"   integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI="   crossorigin="anonymous"></script>
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
   <script type="text/javascript" src="assets/js/game.js"></script>
 </head>
 <body>
-  <div class="container">
-    <h1>Arnold's Trivia Game</h1>
-    <!-- Alert! -->
-    <div class="alert hidden" role="alert">
-      <div class="msg">
+  <div class="container box-shadow">
+    <div class="intro">
+      <h1 class="title"><i class="fa fa-paw text-center" aria-hidden="true"></i> Welcome to my cat trivia game! <i class="fa fa-paw text-center" aria-hidden="true"></i></h1>
+      <div class="row">
+        <div class="timeSpent col-md-4">
+        </div>
+        <div class="answeredCorrectly col-md-4">
+        </div>
+        <div class="answeredWrong col-md-4">
+        </div>
       </div>
-      <button class="btn nextButton pull-right btn-success" role="alert">Next <span aria-hidden="true" click>&gt;</span></button>
-    </div>
-    <h2>Question <span>1</span>:</h2>
-    <div class="question">
-    </div>
-    <div class="options btn-group">
+      <button class="btn btn-primary start">Start Game</button>
+    </div><!--introduction container-->
+    <div class="gameBoard hidden">
+      <div class="row">
+        <h1><i class="fa fa-paw text-center" aria-hidden="true"></i> Kitten Trivia Game <i class="fa fa-paw" aria-hidden="true"></i></h1>
+        <div class="col-md-8">
+          <!-- Alert! -->
+          <div class="alert hidden" role="alert">
+            <div class="msg">
+            </div>
+            <button class="btn nextButton pull-right btn-success" role="alert">Next <span aria-hidden="true" click>&gt;</span></button>
+          </div>
+          <h2>Question <span class="questionCount">1</span>:</h2>
+          <div class="question">
+          </div>
+          <div class="options btn-group">
+          </div>
+        </div>
+        <div class="col-md-4">
+          <h3>Time Left</h3>
+          <div class="timer">10:00</div>
+          <h3># Answered Correctly</h3>
+          <div class="answeredCorrect">0</div>
+          <h3># Answered Wrong</h3>
+          <div class="answeredWrong">0</div>
+        </div>
+      </div><!--end of row-->
     </div>
   </div><!-- End of Container-->
 </body>
