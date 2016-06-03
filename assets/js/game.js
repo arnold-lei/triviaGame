@@ -3,7 +3,7 @@ $('document').ready(function(){
   var questionCounter = 0;
   var correctCount = 0;
   var wrongCount = 0;
-  var time = 1000
+  var time = 600;
 
   //Where the question will be printed and answer options
   var questDiv = $('.question');
@@ -15,26 +15,32 @@ $('document').ready(function(){
   var wrong = $('.answeredWrong');
   var timer = $('.timer');
 
-function update() {
-  var myTime = timer.html();
-  var ss = myTime.split(":");
-  var dt = new Date();
-  dt.setHours(0);
-  dt.setMinutes(ss[0]);
-  dt.setSeconds(ss[1]);
+function countDown(){
+  var countDown;
+    countDown = setInterval(function(){
+      if(time > 0){
+        time--;
+        timer.html(timeConverter(time));
+      }else if (time <= 0 ){
+        clearInterval(countDown);
+        timer.html(timeConverter(time));
+      }
+    }, 1000);
+}
 
-  var dt2 = new Date(dt.valueOf() - 1000);
-  var temp = dt2.toTimeString().split(" ");
-  var ts = temp[0].split(":");
-
-  timer.html(ts[1]+":"+ts[2]);
-  setTimeout(update, 1000);
+function timeConverter(t){
+  var minutes = Math.floor(t/60);
+  var seconds = t - (minutes * 60);
+  if (seconds < 10){
+      seconds = "0" + seconds;
   }
-
-  function countDown(){
-    setInterval(function(){timer -= 1}, 1000);
-    timer.html(time);
+  if (minutes === 0){
+      minutes = "00";
+  } else if (minutes < 10){
+      minutes = "0" + minutes;
   }
+  return minutes + ":" + seconds;
+}
 
   // Question array
   var questions = [
@@ -144,7 +150,7 @@ function update() {
 
   //Intro hides and shows gameboard
   $('.start').on('click', function(){
-    update()
+    countDown();
     $('.intro').addClass('hidden');
     $('.gameBoard').removeClass('hidden');
   });
@@ -196,7 +202,7 @@ function update() {
       questionCounter = 0;
       correctCount = 0;
       wrongCount = 0;
-      options.html(' ');
+      options.empty();
       $('.intro').removeClass('hidden');
       $('.title').html('<i class="fa fa-paw text-center" aria-hidden="true"></i> Welcome to my cat trivia game! Want to Retry?<i class="fa fa-paw text-center" aria-hidden="true"></i>');
       $('.gameBoard').addClass('hidden')
@@ -204,7 +210,6 @@ function update() {
       $('.questionCount').html(questionCounter+1);
       questDiv.html(question);
       alert.addClass('hidden');
-
       init();
     }else{
       questionCounter++;
@@ -212,7 +217,7 @@ function update() {
       questDiv.html(question);
       $('.questionCount').html(questionCounter+1);
       // alert.html(' ');
-      options.html(' ');
+      options.empty();
       alert.addClass('hidden');
       console.log(questionCounter);
       init();
