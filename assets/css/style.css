@@ -31,6 +31,10 @@ h3{
   transform: rotate(30deg);
 }
 
+.title{
+  margin-bottom:1em;
+}
+
 body{
   background-image: url('../img/bg_cat2.jpg');
   background-color:#fff;

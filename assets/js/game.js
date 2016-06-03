@@ -196,9 +196,9 @@ function timeConverter(t){
   nextButton.on('click', function(){
     //end the game
     if(questionCounter + 1 == questions.length){
-      $('.answeredCorrectly').html(correctCount);
-      $('.answeredWrong').html(wrongCount);
-      $('.timeSpent').html(correctCount);
+      $('.answeredCorrectly').html('You answered ' + correctCount + ' questions correctly');
+      $('.answeredWrong').html('You answered ' + wrongCount  + ' questions wrong');
+      $('.timeSpent').html('You spent:' + timeConverter(600 - time)+' minutes on this quiz');
       questionCounter = 0;
       correctCount = 0;
       wrongCount = 0;
