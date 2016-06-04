@@ -5,6 +5,7 @@ $('document').ready(function(){
   var wrongCount = 0;
   var time = 600;
   var cats;
+  var arnold;
 
   //Where the question will be printed and answer options
   var questDiv = $('.question');
@@ -161,6 +162,7 @@ function timeConverter(t){
     questDiv.html(question);
     setOptions(questions);
     getCats();
+    getArnold();
   }//end of init
 
   init();
@@ -175,9 +177,9 @@ function timeConverter(t){
   $('.guess').on('click', function(){
     //This evaluates as true if the player guesses correctly
     if(this.value == questions[questionCounter].answer){
-      getCats();
       alert.removeClass('hidden alert-danger');
       alert.addClass('alert-success');
+      nextButton.html('Next!');
       correctCount++;
       correct.html(correctCount);
       msg.html('You have gotten the correct answer!');
@@ -189,12 +191,14 @@ function timeConverter(t){
     }else{
       alert.removeClass('hidden alert-success');
       alert.addClass('alert-danger');
+      nextButton.html('Next!');
       wrongCount++;
       wrong.html(wrongCount);
       msg.html('Sorry you\'ve gotten the wrong answer! The correct answer was: ' + questions[questionCounter].options[questions[questionCounter].answer] );
       nextButton.addClass('btn-danger');
       nextButton.removeClass('btn-success');
       nextButton.removeClass('hidden');
+      msg.append('<img class="catPic" src="'+arnold+'">');
       $('.guess').prop('disabled', true);
       }
     });
@@ -205,7 +209,7 @@ function timeConverter(t){
     //end the game
     if(questionCounter + 1 == questions.length){
       $('.answeredCorrectly').html('You answered ' + correctCount + ' questions correctly');
-      $('.answeredWrong').html('You answered ' + wrongCount  + ' questions wrong');
+      $('.answeredWrongFinal').html('You answered ' + wrongCount  + ' questions wrong');
       $('.timeSpent').html('You spent:' + timeConverter(600 - time)+' minutes on this quiz');
       questionCounter = 0;
       correctCount = 0;
@@ -228,7 +232,6 @@ function timeConverter(t){
       options.empty();
       alert.addClass('hidden');
       nextButton.addClass('hidden');
-      console.log(questionCounter);
       init();
     }
     if(questionCounter + 2 == questions.length){
@@ -242,7 +245,14 @@ function timeConverter(t){
       method: 'GET',
     }).done(function(catObj){
       cats = catObj.data.image_original_url;
-      return cats
+    })
+  }
+  function getArnold(){
+    $.ajax({
+      url:'http://api.giphy.com/v1/gifs/random?api_key=dc6zaTOxFJmzC&tag=arnold+schwarzenegger',
+      method: 'GET',
+    }).done(function(obj){
+      arnold = obj.data.image_original_url;
     })
   }
 
