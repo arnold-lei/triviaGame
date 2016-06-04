@@ -4,6 +4,7 @@ $('document').ready(function(){
   var correctCount = 0;
   var wrongCount = 0;
   var time = 600;
+  var cats;
 
   //Where the question will be printed and answer options
   var questDiv = $('.question');
@@ -159,6 +160,7 @@ function timeConverter(t){
   function init(){
     questDiv.html(question);
     setOptions(questions);
+    getCats();
   }//end of init
 
   init();
@@ -168,9 +170,12 @@ function timeConverter(t){
       var newDiv = $('<button class="btn btn-primary guess" value="'+ i +'">'+ questions[questionCounter].options[i] + '</button>');
       options.append(newDiv);
     };
-
+    //After the player guesses, alert will show, depending on whether or not the answer is correct it will ether be red or blue
+    //the guess value and the answer in the question array must be the same to be correct
   $('.guess').on('click', function(){
+    //This evaluates as true if the player guesses correctly
     if(this.value == questions[questionCounter].answer){
+      getCats();
       alert.removeClass('hidden alert-danger');
       alert.addClass('alert-success');
       correctCount++;
@@ -178,6 +183,8 @@ function timeConverter(t){
       msg.html('You have gotten the correct answer!');
       nextButton.addClass('btn-success');
       nextButton.removeClass('btn-danger');
+      nextButton.removeClass('hidden');
+      msg.append('<img class="catPic" src="'+cats+'">');
       $('.guess').prop('disabled', true);
     }else{
       alert.removeClass('hidden alert-success');
@@ -187,6 +194,7 @@ function timeConverter(t){
       msg.html('Sorry you\'ve gotten the wrong answer! The correct answer was: ' + questions[questionCounter].options[questions[questionCounter].answer] );
       nextButton.addClass('btn-danger');
       nextButton.removeClass('btn-success');
+      nextButton.removeClass('hidden');
       $('.guess').prop('disabled', true);
       }
     });
@@ -210,15 +218,16 @@ function timeConverter(t){
       $('.questionCount').html(questionCounter+1);
       questDiv.html(question);
       alert.addClass('hidden');
+      nextButton.addClass('hidden');
       init();
     }else{
       questionCounter++;
       question = questions[questionCounter].question;
       questDiv.html(question);
       $('.questionCount').html(questionCounter+1);
-      // alert.html(' ');
       options.empty();
       alert.addClass('hidden');
+      nextButton.addClass('hidden');
       console.log(questionCounter);
       init();
     }
@@ -226,5 +235,15 @@ function timeConverter(t){
       nextButton.html('Finish!');
     }
   });
+
+  function getCats(){
+    $.ajax({
+      url:'http://api.giphy.com/v1/gifs/random?api_key=dc6zaTOxFJmzC&tag=cats',
+      method: 'GET',
+    }).done(function(catObj){
+      cats = catObj.data.image_original_url;
+      return cats
+    })
+  }
 
 });//End of document.ready

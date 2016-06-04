@@ -35,6 +35,10 @@ h3{
   margin-bottom:1em;
 }
 
+.catPic{
+  width:500px;
+}
+
 body{
   background-image: url('../img/bg_cat2.jpg');
   background-color:#fff;
