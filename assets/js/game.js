@@ -198,7 +198,7 @@ function timeConverter(t){
       nextButton.addClass('btn-danger');
       nextButton.removeClass('btn-success');
       nextButton.removeClass('hidden');
-      msg.append('<img class="catPic" src="'+cats+'">');
+      msg.append('<br/><img class="catPic" src="'+cats+'">');
       $('.guess').prop('disabled', true);
       }
     });
