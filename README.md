@@ -5,6 +5,10 @@ The trivia questions can be found here:
 
 http://www.petful.com/misc/20-cat-trivia-questions/
 
+Heroku Link:
+
+http://immense-river-96534.herokuapp.com/
+
 Since I strayed so far from the orignal homework assignment in my previous assingment, I wanted to play it closer to the homework assignment this time. I built a simple trivia game with a timer, it counts the number of questions the player gets right and wrong. I really like how the game is turning out. It's super cute and has a lot of personality I feel. I want to add some more cat pictures and little cat styles. 
 
 For the game I started with building a very simple array with some object questions in it. I made sure that I could loop through the array and have all the multiple choice answers would print out first. I also stored the correct answer as a number that coresponds to the index of the multiple choice answers. The system keeps track of which question the user is on, the question count number is actually dynamically generated from the JS. 
